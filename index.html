@@ -8,9 +8,10 @@
         body {
             font-family: Arial, sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             background-color: #f0f8ff;
             color: #fff;
@@ -21,7 +22,6 @@
             border-radius: 10px;
             background-color: #001f3f;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-            color: #fff;
         }
         h2 {
             text-align: center;
@@ -73,6 +73,14 @@
         .reprovado {
             background-color: red;
         }
+        footer {
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            background-color: #001f3f;
+            color: #fff;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -99,14 +107,14 @@
         <input type="number" id="nc5" min="0" max="10" step="0.1">
     </div>
 
-    <!-- Seção para Simulado e P100/P60 -->
+    <!-- Seção para Testando Conhecimentos e P100 -->
     <div class="section">
-        <h3>Simulado e P100/P60</h3>
+        <h3>Testando Conhecimentos e P100</h3>
         
-        <label for="simulado">Simulado</label>
-        <input type="number" id="simulado" min="0" max="10" step="0.1">
+        <label for="testando">Testando Conhecimentos</label>
+        <input type="number" id="testando" min="0" max="10" step="0.1">
 
-        <label for="prova">P100 ou P60</label>
+        <label for="prova">P100</label>
         <input type="number" id="prova" min="0" max="10" step="0.1">
     </div>
 
@@ -116,6 +124,11 @@
     <!-- Exibição do Resultado -->
     <div id="resultado" class="result"></div>
 </div>
+
+<!-- Rodapé -->
+<footer>
+    Criado por Silas Cavalcanti
+</footer>
 
 <script>
     function calcularMedia() {
@@ -128,7 +141,7 @@
             parseFloat(document.getElementById("nc5").value)
         ];
 
-        let simulado = parseFloat(document.getElementById("simulado").value) || 0;
+        let testando = parseFloat(document.getElementById("testando").value) || 0;
         let prova = parseFloat(document.getElementById("prova").value) || 0;
 
         // Calculando a média parcial das notas de classe
@@ -142,8 +155,8 @@
         }
         let mediaNC = countNC > 0 ? somaNC / countNC : 0;
 
-        // Calculando a média final com pesos
-        let mediaFinal = (mediaNC * 4 + simulado * 2 + prova * 4) / 10;
+        // Calculando a média final com os novos pesos
+        let mediaFinal = (mediaNC * 0.3) + (testando * 0.2) + (prova * 0.5);
 
         // Arredondando a média final
         mediaFinal = Math.round(mediaFinal * 100) / 100;
