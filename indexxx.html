@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de Média Trimestral</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f8ff;
+            color: #fff;
+        }
+        .container {
+            width: 450px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #001f3f;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            text-align: center;
+            color: #fff;
+        }
+        .section {
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #003366;
+            margin-bottom: 15px;
+        }
+        label, input {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+        }
+        input[type="number"] {
+            padding: 8px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            padding: 12px;
+            font-size: 16px;
+            width: 100%;
+            color: #001f3f;
+            background-color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ddd;
+        }
+        .result {
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            color: #fff;
+        }
+        .aprovado {
+            background-color: green;
+        }
+        .reprovado {
+            background-color: red;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            background-color: #001f3f;
+            color: #fff;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Cálculo de Média Trimestral</h2>
+    
+    <!-- Seção para Notas de Classe -->
+    <div class="section">
+        <h3>Notas de Classe</h3>
+        <label for="nc1">NC 1</label>
+        <input type="number" id="nc1" min="0" max="10" step="0.1">
+        
+        <label for="nc2">NC 2</label>
+        <input type="number" id="nc2" min="0" max="10" step="0.1">
+        
+        <label for="nc3">NC 3</label>
+        <input type="number" id="nc3" min="0" max="10" step="0.1">
+        
+        <label for="nc4">NC 4</label>
+        <input type="number" id="nc4" min="0" max="10" step="0.1">
+        
+        <label for="nc5">NC 5</label>
+        <input type="number" id="nc5" min="0" max="10" step="0.1">
+    </div>
+
+    <!-- Seção para Testando Conhecimentos e P100 -->
+    <div class="section">
+        <h3>Testando Conhecimentos e P100</h3>
+        
+        <label for="testando">Testando Conhecimentos</label>
+        <input type="number" id="testando" min="0" max="10" step="0.1">
+
+        <label for="prova">P100</label>
+        <input type="number" id="prova" min="0" max="10" step="0.1">
+    </div>
+
+    <!-- Botão para Calcular -->
+    <button onclick="calcularMedia()">Calcular Média</button>
+
+    <!-- Exibição do Resultado -->
+    <div id="resultado" class="result"></div>
+</div>
+
+<!-- Rodapé -->
+<footer>
+    Criado por Silas Cavalcanti
+</footer>
+
+<script>
+    function calcularMedia() {
+        // Coletando as notas
+        let notasNC = [
+            parseFloat(document.getElementById("nc1").value),
+            parseFloat(document.getElementById("nc2").value),
+            parseFloat(document.getElementById("nc3").value),
+            parseFloat(document.getElementById("nc4").value),
+            parseFloat(document.getElementById("nc5").value)
+        ];
+
+        let testando = parseFloat(document.getElementById("testando").value) || 0;
+        let prova = parseFloat(document.getElementById("prova").value) || 0;
+
+        // Calculando a média parcial das notas de classe
+        let somaNC = 0;
+        let countNC = 0;
+        for (let nota of notasNC) {
+            if (!isNaN(nota)) {  // Considera apenas as notas preenchidas
+                somaNC += nota;
+                countNC++;
+            }
+        }
+        let mediaNC = countNC > 0 ? somaNC / countNC : 0;
+
+        // Calculando a média final com os novos pesos
+        let mediaFinal = (mediaNC * 0.3) + (testando * 0.2) + (prova * 0.5);
+
+        // Arredondando a média final
+        mediaFinal = Math.round(mediaFinal * 100) / 100;
+
+        // Exibindo o resultado com base na condição de aprovação
+        let resultadoDiv = document.getElementById("resultado");
+        if (mediaFinal > 5.75) {
+            resultadoDiv.innerHTML = `Média: ${mediaFinal} - APROVADO`;
+            resultadoDiv.className = "result aprovado";
+        } else {
+            resultadoDiv.innerHTML = `Média: ${mediaFinal} - REPROVADO`;
+            resultadoDiv.className = "result reprovado";
+        }
+    }
+</script>
+
+</body>
+</html>
